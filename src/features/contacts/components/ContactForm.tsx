@@ -15,7 +15,7 @@ export const ContactForm = {
     },
     Footer: ({ children }: { children: React.ReactNode }) => {
         return <div className="flex justify-end gap-2">
-            <DialogClose>
+            <DialogClose asChild>
                 <Button variant={"secondary"}>Close</Button>
             </DialogClose>
             {children}

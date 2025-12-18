@@ -2,9 +2,8 @@ import coreliaLogo from "@/assets/corelia.png";
 import { Bell, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { useDispatch } from "react-redux";
-import { logout } from "@/state/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthProvider";
+import { logout } from "@/features/authentication/state/authSlice";
 
 export const Navbar = () => {
     const dispatch = useDispatch();

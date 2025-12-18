@@ -21,6 +21,7 @@ Corelia is a modern, responsive web application built with React 19 and TypeScri
 - **Forms**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)
 - **UI Components**: [Radix UI](https://www.radix-ui.com/) (Headless) + [Lucide React](https://lucide.dev/) (Icons)
 - **Notifications**: [Sonner](https://sonner.emilkowal.ski/)
+- **DevOps**: [Docker](https://www.docker.com/) (Multi-stage builds + Nginx)
 
 ## 📦 Getting Started
 
@@ -49,6 +50,24 @@ Follow these steps to set up the project locally.
    npm run dev
    ```
    The application will be available at `http://localhost:5173`.
+
+### 🐳 Docker Setup (Production-ready)
+
+If you have Docker installed, you can run the application as a containerized production build.
+
+1. **Build and start the container**
+   ```bash
+   docker compose up --build -d
+   ```
+
+2. **Access the application**
+   The production-optimized build will be served at `http://localhost:3000`.
+
+3. **Stop the container**
+   ```bash
+   docker compose down
+   ```
+
 
 ## 📜 Scripts
 

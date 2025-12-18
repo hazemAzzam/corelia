@@ -1,11 +1,11 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Contact, ContactFilters } from "../../types/Contact";
-import { useAuth } from "@/components/AuthProvider";
+import type { Contact, ContactFilters, ContactSort } from "../types";
 
 interface ContactsState {
     contacts: Contact[];
     searchQuery: string;
     filters: ContactFilters | null;
+    sorting: ContactSort | null;
     currentPage: number;
     itemsPerPage: number;
 }
@@ -13,6 +13,7 @@ interface ContactsState {
 const initialState: ContactsState = {
     contacts: JSON.parse(localStorage.getItem("contacts") || "[]"),
     searchQuery: "",
+    sorting: null,
     filters: null,
     currentPage: 1,
     itemsPerPage: 5,

@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { signup } from "@/state/auth/authSlice";
 import type { RootState } from "@/state/store";
 import type { User } from "@/types/User";
+import { signup } from "../state/authSlice";
 
 
 

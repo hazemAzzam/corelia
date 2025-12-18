@@ -5,10 +5,9 @@ import { ControlledInput } from "@/components/ControlledInput";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/state/auth/authSlice";
-import { useAuth } from "@/components/AuthProvider";
 import { useEffect } from "react";
 import type { RootState } from "@/state/store";
+import { login } from "../state/authSlice";
 
 
 

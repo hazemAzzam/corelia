@@ -1,16 +1,14 @@
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog"
-import { DialogTitle } from "@radix-ui/react-dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { ContactForm } from "./ContactForm"
 import { useForm } from "react-hook-form"
 import { ControlledInput } from "@/components/ControlledInput"
 import { Button } from "@/components/ui/button"
-import { useDispatch } from "react-redux"
-import { addContact } from "@/state/contacts/contactsSlice"
+import { useCreateContact } from "../hooks"
 import { useAuth } from "@/components/AuthProvider"
 
 export const NewContactDialog = ({ children }: { children: React.ReactNode }) => {
     const user = useAuth();
-    const dispatch = useDispatch();
+    const { mutate: create, isPending } = useCreateContact();
     const form = useForm({
         defaultValues: {
             userId: user?.id,
@@ -20,15 +18,18 @@ export const NewContactDialog = ({ children }: { children: React.ReactNode }) =>
     });
 
     const onSubmit = (data: any) => {
-        dispatch(addContact(data));
+        create(data);
         form.reset();
     }
 
     return <Dialog>
-        <DialogTrigger>{children}</DialogTrigger>
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>Add New Contact</DialogTitle>
+                <DialogDescription>
+                    Fill in the details below to add a new contact to your list.
+                </DialogDescription>
             </DialogHeader>
             <ContactForm.Form form={form} onSubmit={onSubmit}>
                 <ContactForm.Content>
@@ -36,7 +37,9 @@ export const NewContactDialog = ({ children }: { children: React.ReactNode }) =>
                     <ControlledInput name="phoneNumber" placeholder="Enter phone number (e.g., +201234567890)" label="Phone Number" className="p-5" />
                 </ContactForm.Content>
                 <ContactForm.Footer>
-                    <Button type="submit" className="bg-blue-500">Add Contact</Button>
+                    <Button type="submit" className="bg-blue-500" disabled={isPending}>
+                        {isPending ? "Adding..." : "Add Contact"}
+                    </Button>
                 </ContactForm.Footer>
             </ContactForm.Form>
         </DialogContent>

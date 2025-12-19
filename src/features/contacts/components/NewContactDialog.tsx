@@ -23,7 +23,12 @@ export const NewContactDialog = ({ children }: { children: React.ReactNode }) =>
 
     const onSubmit = (data: Contact) => {
         create(data);
-        form.reset();
+        form.reset({
+            id: Date.now().toString(),
+            userId: user?.id,
+            name: "",
+            phoneNumber: "",
+        });
     }
 
     return <Dialog>

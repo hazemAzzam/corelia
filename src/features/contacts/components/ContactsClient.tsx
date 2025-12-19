@@ -47,7 +47,7 @@ export const ContactsContent = () => {
 
 
 const ContactControls = ({ contactsLength }: { contactsLength: number }) => {
-    return <div className="flex items-center justify-between w-full">
+    return <div className="flex items-center flex-wrap justify-between w-full gap-5">
         <p className="bg-muted h-full px-5 py-2">You have {contactsLength} contacts</p>
         <NewContactDialog>
             <Button className="bg-blue-500">
@@ -69,7 +69,7 @@ const ContactsTable = ({ contacts }: { contacts: Contact[] }) => {
         }));
     };
 
-    return <Table className="**:text-center border">
+    return <Table className="**:text-center border overflow-auto">
         <TableHeader>
             <TableRow className="bg-muted *:font-bold">
                 <TableHead>#</TableHead>

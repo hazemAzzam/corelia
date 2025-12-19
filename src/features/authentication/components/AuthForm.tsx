@@ -27,9 +27,9 @@ export const AuthForm = {
     },
     LoginControls: () => {
         return <div className="flex flex-col">
-            <div className="flex justify-between">
+            <div className="flex justify-between flex-wrap items-center gap-5 text-center">
                 <ControlledCheckbox name="rememberMe" label="Remember me" />
-                <Link to="#">Forgot Password?</Link>
+                <Link to="#" className="text-center">Forgot Password?</Link>
             </div>
         </div>
     },
@@ -39,7 +39,7 @@ export const AuthForm = {
         </div>
     },
     Footer: ({ children }: { children: React.ReactNode }) => {
-        return <div className="flex items-center justify-center w-full">
+        return <div className=" w-full">
             <div className="text-center">{children}</div>
         </div>
     }

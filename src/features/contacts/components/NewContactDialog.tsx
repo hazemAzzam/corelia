@@ -14,6 +14,7 @@ export const NewContactDialog = ({ children }: { children: React.ReactNode }) =>
     const form = useForm<Contact>({
         resolver: zodResolver(ContactSchema),
         defaultValues: {
+            id: Date.now().toString(),
             userId: user?.id,
             name: "",
             phoneNumber: "",

@@ -112,7 +112,7 @@ const ContactsTable = ({ contacts }: { contacts: Contact[] }) => {
                         </EditContactDialog>
                         <Button
                             variant={"ghost"}
-                            onClick={() => deleteContact(contact.id)}
+                            onClick={() => deleteContact(contact.id!)}
                             disabled={isDeleting}
                         >
                             <Trash className={isDeleting ? "text-gray-400" : "text-red-500"} />

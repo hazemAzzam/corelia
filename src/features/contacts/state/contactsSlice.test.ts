@@ -31,14 +31,14 @@ describe('contactsSlice', () => {
         const action = addContact(newContact);
         const state = reducer(undefined, action);
 
-        expect(state.contacts[0]).toStrictEqual({ ...newContact, id: Date.now().toString() });
+        expect(state.contacts[0]).toStrictEqual({ ...newContact });
     });
 
     it('should handle deleteContact', () => {
         const initialState = {
             contacts: [mockContact],
         };
-        const action = deleteContact(mockContact.id);
+        const action = deleteContact(mockContact.id!);
         const state = reducer(initialState, action);
 
         expect(state.contacts).toHaveLength(0);

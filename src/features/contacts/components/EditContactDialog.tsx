@@ -24,7 +24,7 @@ export const EditContactDialog = ({ children, contact }: { children: React.React
     }, [contact]);
 
     const onSubmit = (data: Contact) => {
-        update({ id: contact.id, contact: data });
+        update({ id: contact.id!, contact: data });
         form.reset();
     }
 

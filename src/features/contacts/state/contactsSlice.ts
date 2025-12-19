@@ -26,7 +26,7 @@ const contactsSlice = createSlice({
     reducers: {
         addContact: (state, action: PayloadAction<Contact>) => {
             const contact = action.payload;
-            contact.id = Date.now().toString();
+
             state.contacts.push(contact);
         },
         updateContact: (state, action: PayloadAction<{ id: string, contact: Contact }>) => {

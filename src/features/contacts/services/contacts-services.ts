@@ -27,7 +27,7 @@ export class ContactsService {
                 return 0;
             });
 
-        const totalItems = filteredContacts.length;
+        const totalItems = userContacts.length;
         const slicedContacts = filteredContacts.slice(
             (pagination.currentPage - 1) * pagination.itemsPerPage,
             pagination.currentPage * pagination.itemsPerPage

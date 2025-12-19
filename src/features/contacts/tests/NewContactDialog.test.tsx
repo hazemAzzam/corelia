@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { NewContactDialog } from './NewContactDialog';
 import { renderWithProviders } from '@/test/test-utils';
+import { NewContactDialog } from '../components/NewContactDialog';
 
 describe('NewContactDialog Integration', () => {
     it('should open dialog and allow form submission', async () => {

@@ -3,19 +3,22 @@ import { useDispatch } from "react-redux";
 import { addContact, updateContact, deleteContact } from "../state/contactsSlice";
 import type { Contact } from "../types";
 import { toast } from "sonner";
+import { useAuth } from "@/components/AuthProvider";
 
 export const useCreateContact = () => {
     const dispatch = useDispatch();
     const queryClient = useQueryClient();
+    const user = useAuth();
 
     return useMutation({
-        mutationFn: async (newContact: Omit<Contact, "id">) => {
+        mutationFn: async (newContact: Contact) => {
             await new Promise((resolve) => setTimeout(resolve, 500));
             return newContact;
         },
         onSuccess: (data) => {
-            const contactWithId = { ...data, id: Date.now().toString() } as Contact;
-            dispatch(addContact(contactWithId));
+            if (!user) return;
+
+            dispatch(addContact(data));
 
             queryClient.invalidateQueries({ queryKey: ["contacts"] });
 

@@ -1,14 +1,21 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { User } from "../../../types/User";
+import type { User, UserWithRememberMe } from "../../../types/User";
+import { ERRORS_CODE } from "../errors";
+import { toast } from "sonner";
+
 
 interface AuthState {
-    user: User | null;
+    users: User[];
+    activeUser: User | null;
+    rememberedUser: User | null;
     isError: boolean | null;
     error: string | null;
 }
 
 const initialState: AuthState = {
-    user: JSON.parse(localStorage.getItem("user")!),
+    users: localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users") || "") : [],
+    rememberedUser: localStorage.getItem("rememberedUser") ? JSON.parse(localStorage.getItem("rememberedUser") || "") : null,
+    activeUser: localStorage.getItem("rememberedUser") ? JSON.parse(localStorage.getItem("rememberedUser") || "") : null,
     isError: null,
     error: null,
 };
@@ -17,50 +24,36 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<User>) => {
-            try {
-                const users = localStorage.getItem("users")
-
-                if (!users) throw new Error("No Users Found")
-
-                const parsedUsers = JSON.parse(users!)
-                const user = parsedUsers.find((user: User) => user.email === action.payload.email && user.password === action.payload.password)
-
-                if (!user) throw new Error("Invalid Credentials")
-
-                state.user = user
-
+        login: (state, action: PayloadAction<UserWithRememberMe>) => {
+            const user = state.users.find((u) => u.email === action.payload.email && u.password === action.payload.password);
+            if (user) {
+                state.activeUser = user;
                 if (action.payload.rememberMe)
-                    localStorage.setItem("user", JSON.stringify(state.user))
-
-            }
-            catch (error: any) {
-                state.isError = true
-                state.error = error.message
+                    state.rememberedUser = user;
+            } else {
+                state.isError = true;
+                state.error = ERRORS_CODE.USER_NOT_FOUND;
+                toast.error(ERRORS_CODE.USER_NOT_FOUND);
             }
         },
         signup: (state, action: PayloadAction<User>) => {
-            try {
-                const users = localStorage.getItem("users") || "[]"
+            /* Check Email Existance */
 
-                const parsedUsers: User[] = JSON.parse(users)
-                const user = parsedUsers.find((user: User) => user.email === action.payload.email)
-
-                if (user) throw new Error("Email Already Exist")
-
-                localStorage.setItem("users", JSON.stringify([...parsedUsers, action.payload]));
-
-                state.user = action.payload;
-            }
-            catch (error: any) {
+            const user = state.users.find((u) => u.email === action.payload.email);
+            if (user) {
                 state.isError = true;
-                state.error = error.message
+                state.error = ERRORS_CODE.USER_ALREADY_EXISTS;
+                toast.error(ERRORS_CODE.USER_ALREADY_EXISTS);
+                return;
             }
+
+            /* Update Users State */
+            state.users.push(action.payload);
+            state.activeUser = action.payload;
         },
         logout: (state) => {
-            state.user = null;
-            state.isError = null;
-            localStorage.removeItem("user")
+            state.activeUser = null;
+            state.rememberedUser = null;
         },
     },
 });

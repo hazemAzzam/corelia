@@ -1,14 +1,12 @@
 import type { Pagination } from "@/types/pagination";
 import type { Contact, ContactFilters, ContactSort } from "../types";
-
 export class ContactsService {
-    static async getContacts({ pagination, sorting, filters }: { pagination: Pagination, sorting: ContactSort, filters: ContactFilters }): Promise<{ data: Contact[], totalItems: number }> {
-        const user = JSON.parse(localStorage.getItem("user") || "null");
-        if (!user) return { data: [], totalItems: 0 };
+    static async getContacts({ pagination, sorting, filters, userId }: { pagination: Pagination, sorting: ContactSort, filters: ContactFilters, userId?: string }): Promise<{ data: Contact[], totalItems: number }> {
+        if (!userId) return { data: [], totalItems: 0 };
 
         const contacts = JSON.parse(localStorage.getItem("contacts") || "[]");
 
-        const userContacts = contacts.filter((contact: Contact) => contact.userId === user.id);
+        const userContacts = contacts.filter((contact: Contact) => contact.userId === userId);
 
         const filteredContacts = userContacts
             .filter((contact: Contact) => {

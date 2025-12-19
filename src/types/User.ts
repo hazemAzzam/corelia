@@ -3,5 +3,6 @@ export type User = {
   email: string;
   name?: string;
   password?: string;
-  rememberMe: boolean;
 };
+
+export type UserWithRememberMe = User & { rememberMe: boolean };

@@ -11,7 +11,7 @@ export default function AuthProvider({
 }
 
 export const useAuth = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
+  const user = useSelector((state: RootState) => state.auth.activeUser);
 
   return user;
 };

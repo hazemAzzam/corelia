@@ -3,14 +3,14 @@ import type { Contact } from "../types";
 
 import { useContacts, useDeleteContactMutation } from "../hooks";
 
-import { NewContactDialog } from "./NewContactDialog";
 import { Button } from "@/components/ui/button";
 import { CirclePlus, Pen, Trash, UserX } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { EditContactDialog } from "./EditContactDialog";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { AppPagination } from "@/components/AppPagination";
 import { useContactsContext } from "../context/ContactsContext";
+import { NewContactDialog } from "./NewContactDialog";
+import { EditContactDialog } from "./EditContactDialog";
 
 export const ContactsContent = () => {
     const { pagination, setPagination, sorting, filters } = useContactsContext();

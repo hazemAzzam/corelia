@@ -1,15 +1,18 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { ContactForm } from "./ContactForm"
 import { useForm } from "react-hook-form"
 import { ControlledInput } from "@/components/ControlledInput"
 import { Button } from "@/components/ui/button"
-import { useCreateContact } from "../hooks"
 import { useAuth } from "@/components/AuthProvider"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCreateContact } from "../hooks"
+import { ContactSchema, type Contact } from "../types"
+import { ContactForm } from "./ContactForm"
 
 export const NewContactDialog = ({ children }: { children: React.ReactNode }) => {
     const user = useAuth();
     const { mutate: create, isPending } = useCreateContact();
-    const form = useForm({
+    const form = useForm<Contact>({
+        resolver: zodResolver(ContactSchema),
         defaultValues: {
             userId: user?.id,
             name: "",
@@ -17,7 +20,7 @@ export const NewContactDialog = ({ children }: { children: React.ReactNode }) =>
         },
     });
 
-    const onSubmit = (data: any) => {
+    const onSubmit = (data: Contact) => {
         create(data);
         form.reset();
     }

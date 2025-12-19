@@ -1,17 +1,23 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { ContactForm } from "./ContactForm"
 import { useForm } from "react-hook-form"
 import { ControlledInput } from "@/components/ControlledInput"
 import { Button } from "@/components/ui/button"
-import { useUpdateContactMutation } from "../hooks"
 import { useAuth } from "@/components/AuthProvider"
-import type { Contact } from "../types"
 import { useEffect } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { ContactSchema, type Contact } from "../types"
+import { useUpdateContactMutation } from "../hooks"
+import { ContactForm } from "./ContactForm"
+
+
 
 export const EditContactDialog = ({ children, contact }: { children: React.ReactNode, contact: Contact }) => {
     const user = useAuth();
     const { mutate: update, isPending } = useUpdateContactMutation();
-    const form = useForm();
+    const form = useForm<Contact>({
+        resolver: zodResolver(ContactSchema),
+        defaultValues: contact,
+    });
 
     useEffect(() => {
         form.reset(contact);
